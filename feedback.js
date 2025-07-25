@@ -39,8 +39,8 @@ function submitFeedback() {
     // Save to localStorage (temporary storage)
     saveFeedback(feedback);
     
-    // Submit to GitHub (this will be implemented next)
-    submitToGitHub(feedback);
+    // Submit to local server
+    submitToLocalServer(feedback);
     
     // Add to display
     addFeedbackCard(feedback);
@@ -148,63 +148,42 @@ function addFeedbackCard(feedback) {
     container.appendChild(card);
 }
 
-async function submitToGitHub(feedback) {
+async function submitToLocalServer(feedback) {
     try {
-        // Format the issue body with structured data
-        const issueBody = `## 🗒️ Site Feedback Submission
-
-**Type:** ${feedback.type}
-**Priority:** ${feedback.priority}
-**Page/Section:** ${feedback.pageSection}
-**Submitted:** ${feedback.timestamp}
-
-### 📝 Request:
-${feedback.text}
-
-${feedback.expectedResult ? `### 🎯 Expected Result:
-${feedback.expectedResult}` : ''}
-
----
-*🤖 This issue was automatically created from the site feedback form.*`;
-
-        // Create issue title
-        const issueTitle = `${getTypeEmoji(feedback.type)} [${feedback.type.toUpperCase()}] ${feedback.pageSection}: ${feedback.text.substring(0, 50)}${feedback.text.length > 50 ? '...' : ''}`;
-
-        // For demonstration - in production you'd use GitHub API
-        const issueData = {
-            title: issueTitle,
-            body: issueBody,
-            labels: [
-                'site-feedback',
-                `type-${feedback.type}`,
-                `priority-${feedback.priority}`
-            ]
-        };
-
-        console.log('📤 Would create GitHub issue:', issueData);
+        console.log('📤 Submitting to local feedback server:', feedback);
         
-        // Simulate GitHub API call
-        // In production, you'd use:
-        // const response = await fetch('https://api.github.com/repos/w4ester/silasOnlinePortfolio/issues', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Authorization': `token ${GITHUB_TOKEN}`,
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(issueData)
-        // });
+        // Send to local webhook server
+        const response = await fetch('http://localhost:3001/api/feedback', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(feedback)
+        });
 
-        // Simulate success
-        setTimeout(() => {
-            updateFeedbackStatus(feedback.id, 'github-submitted');
-            
-            // Show GitHub link (simulated)
-            showGitHubLinkNotification(feedback.id);
-        }, 1500);
+        if (!response.ok) {
+            throw new Error(`Server responded with ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log('✅ Local server response:', result);
+
+        // Update status to show it was sent locally
+        updateFeedbackStatus(feedback.id, 'sent-to-developer');
+        
+        // Show notification that it was sent to developer
+        showLocalSubmissionNotification(feedback.id);
 
     } catch (error) {
-        console.error('Failed to submit to GitHub:', error);
-        updateFeedbackStatus(feedback.id, 'github-error');
+        console.error('Failed to submit to local server:', error);
+        
+        // Check if server is running
+        if (error.message.includes('Failed to fetch') || error.message.includes('ERR_CONNECTION_REFUSED')) {
+            updateFeedbackStatus(feedback.id, 'server-offline');
+            showServerOfflineNotification();
+        } else {
+            updateFeedbackStatus(feedback.id, 'submission-error');
+        }
     }
 }
 
@@ -219,18 +198,40 @@ function getTypeEmoji(type) {
     return emojis[type] || '📝';
 }
 
-function showGitHubLinkNotification(feedbackId) {
+function showLocalSubmissionNotification(feedbackId) {
     const notification = document.createElement('div');
-    notification.className = 'fixed bottom-4 right-4 bg-blue-500 text-white px-6 py-4 rounded-lg shadow-lg z-50 max-w-sm';
+    notification.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg z-50 max-w-sm';
     notification.innerHTML = `
         <div class="flex items-start gap-3">
-            <span class="text-xl">🚀</span>
+            <span class="text-xl">🎯</span>
             <div>
-                <div class="font-bold mb-1">GitHub Issue Created!</div>
-                <div class="text-sm opacity-90 mb-2">Your feedback has been submitted to the development queue.</div>
-                <a href="https://github.com/w4ester/silasOnlinePortfolio/issues" target="_blank" class="text-blue-200 hover:text-white underline text-sm">
-                    View on GitHub →
-                </a>
+                <div class="font-bold mb-1">Sent to Developer!</div>
+                <div class="text-sm opacity-90 mb-2">Your feedback has been delivered and a notification was sent locally.</div>
+                <div class="text-xs opacity-80">The developer will review and implement your request.</div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Remove after 6 seconds
+    setTimeout(() => {
+        if (notification.parentElement) {
+            document.body.removeChild(notification);
+        }
+    }, 6000);
+}
+
+function showServerOfflineNotification() {
+    const notification = document.createElement('div');
+    notification.className = 'fixed bottom-4 right-4 bg-orange-500 text-white px-6 py-4 rounded-lg shadow-lg z-50 max-w-sm';
+    notification.innerHTML = `
+        <div class="flex items-start gap-3">
+            <span class="text-xl">⚠️</span>
+            <div>
+                <div class="font-bold mb-1">Developer Server Offline</div>
+                <div class="text-sm opacity-90 mb-2">Your feedback was saved locally but couldn't reach the developer.</div>
+                <div class="text-xs opacity-80">It will be sent when the server comes back online.</div>
             </div>
         </div>
     `;
