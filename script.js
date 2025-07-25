@@ -190,55 +190,6 @@ ${body}`;
         window.open(gmailUrl, '_blank');
     };
 
-    // Copy email template function
-    window.copyEmailTemplate = function() {
-        const emailTemplate = `Subject: Thank you and instructions for Silas's online recommendation portal
-
-Dear [Name/Team],
-
-Thank you so much for agreeing to write a letter of recommendation for Silas. We are incredibly grateful for your support and for the positive impact you've had on his growth and development.
-
-To make the recommendation process as convenient as possible, we've created an online portal where you can easily submit your letter:
-
-Website: [INSERT YOUR WEBSITE URL HERE]
-
-Step-by-step instructions:
-1. Visit the website link above
-2. Click "Write Recommendation" in the navigation menu
-3. Read the helpful instructions at the top of the form
-4. Fill out your contact information (name, title, email, organization)
-5. Edit the sample letter with your personal experiences with Silas
-6. Click "Submit Recommendation"
-7. In the popup window, click "Copy Email Content"
-8. Open your preferred email app and paste the content
-9. Send the email - it will be automatically addressed to Silas
-
-✅ This system works with: Gmail, Outlook, Apple Mail, phone email apps, and any email service. It works on desktop, tablet, and mobile devices.
-
-The website also includes Silas's complete resume and portfolio for your reference while writing the recommendation.
-
-If you have any questions or technical issues, please don't hesitate to reach out. We truly appreciate your time and support in helping Silas with his next steps.
-
-With sincere gratitude,
-[Your signature/Silas's family]`;
-
-        navigator.clipboard.writeText(emailTemplate).then(() => {
-            // Show brief success message
-            const button = event.target;
-            const originalText = button.innerHTML;
-            button.innerHTML = '✅ Copied!';
-            button.classList.add('bg-green-500');
-            button.classList.remove('bg-ocean-blue');
-            
-            setTimeout(() => {
-                button.innerHTML = originalText;
-                button.classList.remove('bg-green-500');
-                button.classList.add('bg-ocean-blue');
-            }, 2000);
-        }).catch(() => {
-            alert('Unable to copy automatically. Please manually copy the email content above.');
-        });
-    };
 
     // Add some interactive animations
     const skillCards = document.querySelectorAll('.bg-ocean-blue\\/10');

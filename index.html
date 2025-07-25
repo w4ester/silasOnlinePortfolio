@@ -79,7 +79,6 @@
         <div class="text-2xl font-bold text-deep-blue">Silas Forrester</div>
         <div class="space-x-6">
           <a href="#resume" class="text-gray-700 hover:text-ocean-blue transition-colors">Resume</a>
-          <a href="#email-template" class="text-gray-700 hover:text-ocean-blue transition-colors">Email Template</a>
           <a href="#recommendation" class="text-gray-700 hover:text-ocean-blue transition-colors">Write Recommendation</a>
         </div>
       </div>
@@ -228,74 +227,6 @@
     </div>
   </section>
 
-  <!-- Email Template Section -->
-  <section id="email-template" class="bg-gray-50 py-16">
-    <div class="max-w-4xl mx-auto px-4">
-      <div class="text-center mb-12">
-        <h2 class="text-4xl font-bold mb-4 text-gray-800">📧 Email Template for Recommenders</h2>
-        <p class="text-xl text-gray-600">Copy and send this message to prospective letter writers</p>
-      </div>
-
-      <div class="bg-white rounded-lg shadow-xl p-8">
-        <div class="mb-6">
-          <h3 class="text-2xl font-bold text-deep-blue mb-4">Ready-to-Send Email</h3>
-          <p class="text-gray-600 mb-4">Copy the text below and send to anyone you'd like to request a recommendation from:</p>
-        </div>
-
-        <div class="bg-gray-50 p-6 rounded-lg border-l-4 border-ocean-blue">
-          <div class="space-y-4 text-gray-800">
-            <div>
-              <strong>Subject:</strong> Thank you and instructions for Silas's online recommendation portal
-            </div>
-            
-            <div class="border-t pt-4">
-              <div class="space-y-4 leading-relaxed">
-                <p>Dear [Name/Team],</p>
-                
-                <p>Thank you so much for agreeing to write a letter of recommendation for Silas. We are incredibly grateful for your support and for the positive impact you've had on his growth and development.</p>
-                
-                <p>To make the recommendation process as convenient as possible, we've created an online portal where you can easily submit your letter:</p>
-                
-                <div class="bg-blue-50 p-4 rounded-lg my-4">
-                  <p><strong>Website:</strong> <span class="text-ocean-blue font-mono">[INSERT YOUR WEBSITE URL HERE]</span></p>
-                </div>
-                
-                <p><strong>Step-by-step instructions:</strong></p>
-                <ol class="list-decimal list-inside space-y-2 ml-4">
-                  <li>Visit the website link above</li>
-                  <li>Click "Write Recommendation" in the navigation menu</li>
-                  <li>Read the helpful instructions at the top of the form</li>
-                  <li>Fill out your contact information (name, title, email, organization)</li>
-                  <li>Edit the sample letter with your personal experiences with Silas</li>
-                  <li>Click "Submit Recommendation"</li>
-                  <li>In the popup window, click "Copy Email Content"</li>
-                  <li>Open your preferred email app and paste the content</li>
-                  <li>Send the email - it will be automatically addressed to Silas</li>
-                </ol>
-                
-                <p>✅ <strong>This system works with:</strong> Gmail, Outlook, Apple Mail, phone email apps, and any email service. It works on desktop, tablet, and mobile devices.</p>
-                
-                <p>The website also includes Silas's complete resume and portfolio for your reference while writing the recommendation.</p>
-                
-                <p>If you have any questions or technical issues, please don't hesitate to reach out. We truly appreciate your time and support in helping Silas with his next steps.</p>
-                
-                <p>With sincere gratitude,<br>
-                [Your signature/Silas's family]</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="text-center mt-6">
-          <button onclick="copyEmailTemplate()" class="bg-ocean-blue hover:bg-deep-blue text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-lg">
-            📋 Copy Email Template
-          </button>
-          <p class="text-sm text-gray-600 mt-3">Click to copy the entire email to your clipboard</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Recommendation Section -->
   <section id="recommendation" class="bg-gradient-to-r from-deep-blue to-ocean-blue text-white py-16">
     <div class="max-w-4xl mx-auto px-4">
@@ -314,6 +245,11 @@
             <p><strong>3. Click "Submit Recommendation"</strong> - this will prepare your email</p>
             <p><strong>4. Copy the email content</strong> and paste it into your preferred email app</p>
             <p class="text-ocean-blue font-medium">✅ Works with Gmail, Outlook, Apple Mail, phone apps, and any email service!</p>
+          </div>
+          
+          <!-- Important Note -->
+          <div class="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <p class="text-sm text-gray-800"><strong>⚠️ Important:</strong> When filling out the form, make sure your full name, title, and organization appear completely in the letter header section. If you only see the first letter of each field (like "J" instead of "John"), please refresh the page and try again to ensure the letter displays your complete information.</p>
           </div>
         </div>
 
