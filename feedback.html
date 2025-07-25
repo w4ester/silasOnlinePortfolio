@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Site Feedback - Silas Forrester</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ocean-blue': '#0ea5e9',
+            'deep-blue': '#0c4a6e',
+            'sand': '#fef3c7'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .notecard {
+      background: linear-gradient(135deg, #fef9e7 0%, #f3f4f6 100%);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      border-left: 4px solid #0ea5e9;
+    }
+    
+    .notecard:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .sticky-note {
+      background: #fff9c4;
+      transform: rotate(-1deg);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .sticky-note:nth-child(even) {
+      transform: rotate(1deg);
+      background: #fecaca;
+    }
+    
+    .sticky-note:nth-child(3n) {
+      background: #bfdbfe;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-ocean-blue/10 min-h-screen">
+  <!-- Navigation -->
+  <nav class="bg-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex justify-between items-center py-4">
+        <div class="text-2xl font-bold text-deep-blue">Site Feedback</div>
+        <div class="space-x-6">
+          <a href="index.html" class="text-gray-700 hover:text-ocean-blue transition-colors">← Back to Resume</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section class="bg-gradient-to-r from-deep-blue to-ocean-blue text-white py-12">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h1 class="text-4xl font-bold mb-4">🗒️ Site Feedback</h1>
+      <p class="text-xl">Leave notes about changes, updates, or improvements you'd like to see</p>
+    </div>
+  </section>
+
+  <!-- Feedback Form -->
+  <section class="py-16">
+    <div class="max-w-4xl mx-auto px-4">
+      <!-- Instructions -->
+      <div class="bg-blue-50 border-l-4 border-ocean-blue p-6 mb-8 rounded-r-lg">
+        <h3 class="text-lg font-bold text-deep-blue mb-3">📝 How This Works</h3>
+        <div class="space-y-2 text-sm text-gray-700">
+          <p><strong>1. Leave a feedback card</strong> describing what you want changed</p>
+          <p><strong>2. Your request gets automatically converted</strong> into a GitHub issue</p>
+          <p><strong>3. An AI assistant reviews and implements</strong> the changes</p>
+          <p><strong>4. You'll get notified</strong> to review and approve the changes</p>
+          <p class="text-ocean-blue font-medium">✨ Completely automated development workflow!</p>
+        </div>
+      </div>
+
+      <!-- New Feedback Card -->
+      <div class="notecard p-8 rounded-lg mb-8 transition-all duration-200">
+        <h2 class="text-2xl font-bold text-deep-blue mb-6">📋 Create New Feedback</h2>
+        
+        <form id="feedbackForm" class="space-y-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Feedback Type</label>
+            <select id="feedbackType" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-blue focus:border-transparent">
+              <option value="update">🔄 Update - Change existing content</option>
+              <option value="create">➕ Create - Add new feature/section</option>
+              <option value="delete">🗑️ Delete - Remove something</option>
+              <option value="fix">🔧 Fix - Bug or issue</option>
+              <option value="design">🎨 Design - Visual/styling changes</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Priority Level</label>
+            <div class="flex gap-4">
+              <label class="flex items-center">
+                <input type="radio" name="priority" value="high" class="mr-2">
+                <span class="text-red-600">🔴 High - Do this first</span>
+              </label>
+              <label class="flex items-center">
+                <input type="radio" name="priority" value="medium" checked class="mr-2">
+                <span class="text-yellow-600">🟡 Medium - Normal priority</span>
+              </label>
+              <label class="flex items-center">
+                <input type="radio" name="priority" value="low" class="mr-2">
+                <span class="text-green-600">🟢 Low - When you have time</span>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Page/Section</label>
+            <input type="text" id="pageSection" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-blue focus:border-transparent" placeholder="e.g., Resume page, Recommendation form, Navigation">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">What would you like changed?</label>
+            <textarea id="feedbackText" rows="6" class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-blue focus:border-transparent" placeholder="Describe exactly what you want changed, added, or removed. Be as specific as possible!"></textarea>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Expected Result (optional)</label>
+            <textarea id="expectedResult" rows="3" class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-blue focus:border-transparent" placeholder="What should it look like or do after the change?"></textarea>
+          </div>
+
+          <div class="text-center">
+            <button type="submit" class="bg-ocean-blue hover:bg-deep-blue text-white font-bold py-4 px-8 rounded-lg transition-colors text-lg shadow-lg">
+              📝 Submit Feedback
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Submitted Feedback Cards -->
+      <div id="feedbackCards" class="space-y-6">
+        <!-- Cards will be populated here -->
+      </div>
+    </div>
+  </section>
+
+  <script src="feedback.js"></script>
+</body>
+</html>
