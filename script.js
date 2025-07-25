@@ -159,30 +159,82 @@ ${data.writerName}`;
         }, 30000);
     }
 
-    // Copy email content to clipboard
+    // Copy email content to clipboard with fallback
     window.copyEmailContent = function(subject, body) {
         const emailContent = `To: 1william.forrester@gmail.com
 Subject: ${subject}
 
 ${body}`;
 
-        navigator.clipboard.writeText(emailContent).then(() => {
-            // Show brief success message
-            const button = event.target;
-            const originalText = button.innerHTML;
-            button.innerHTML = '✅ Copied!';
-            button.classList.add('bg-green-500');
-            button.classList.remove('bg-ocean-blue');
-            
-            setTimeout(() => {
-                button.innerHTML = originalText;
-                button.classList.remove('bg-green-500');
-                button.classList.add('bg-ocean-blue');
-            }, 2000);
-        }).catch(() => {
-            alert('Unable to copy automatically. Please manually copy the email content above.');
-        });
+        // Try modern clipboard API first
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(emailContent).then(() => {
+                showCopySuccess();
+            }).catch(() => {
+                fallbackCopy(emailContent);
+            });
+        } else {
+            fallbackCopy(emailContent);
+        }
     };
+
+    function showCopySuccess() {
+        const button = event.target;
+        const originalText = button.innerHTML;
+        button.innerHTML = '✅ Copied!';
+        button.classList.add('bg-green-500');
+        button.classList.remove('bg-ocean-blue');
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.classList.remove('bg-green-500');
+            button.classList.add('bg-ocean-blue');
+        }, 2000);
+    }
+
+    function fallbackCopy(text) {
+        // Create a temporary textarea element
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        try {
+            const result = document.execCommand('copy');
+            if (result) {
+                showCopySuccess();
+            } else {
+                showManualCopyPrompt(text);
+            }
+        } catch (err) {
+            showManualCopyPrompt(text);
+        } finally {
+            document.body.removeChild(textArea);
+        }
+    }
+
+    function showManualCopyPrompt(text) {
+        // Show a modal with the text to copy manually
+        const modal = document.createElement('div');
+        modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+        modal.innerHTML = `
+            <div class="bg-white rounded-lg p-6 max-w-2xl mx-4 max-h-screen overflow-y-auto">
+                <h3 class="text-xl font-bold mb-4">📋 Copy Email Content</h3>
+                <p class="text-gray-600 mb-4">Please manually copy this email content:</p>
+                <textarea readonly class="w-full h-64 p-3 border rounded bg-gray-50 text-sm font-mono" onclick="this.select()">${text}</textarea>
+                <div class="flex gap-3 mt-4 justify-end">
+                    <button onclick="this.parentElement.parentElement.parentElement.remove()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                        Close
+                    </button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
 
     // Open Gmail compose
     window.openGmail = function(subject, body) {
