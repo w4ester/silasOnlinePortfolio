@@ -366,15 +366,28 @@ app.get('/health', (req, res) => {
     res.json({ status: 'running', timestamp: new Date().toISOString() });
 });
 
+// Check for offline feedback from emails (future feature)
+async function checkEmailForOfflineFeedback() {
+    // TODO: Parse inbox for "🎯 OFFLINE FEEDBACK" emails
+    // Extract JSON from email body  
+    // Import as regular feedback
+    // Send catch-up notification
+    console.log('📧 Email import feature - coming soon!');
+}
+
 // Start server
 async function startServer() {
     await initializeFeedbackFile();
+    
+    // Check for any offline feedback from emails
+    await checkEmailForOfflineFeedback();
     
     app.listen(PORT, 'localhost', () => {
         console.log(`\n🎯 Feedback Server Running!`);
         console.log(`📡 URL: http://localhost:${PORT}`);
         console.log(`📂 Data: ${FEEDBACK_FILE}`);
         console.log(`🔔 Notifications: Enabled`);
+        console.log(`📧 Email Fallback: Ready`);
         console.log(`\n💡 Waiting for feedback from Silas...\n`);
     });
 }

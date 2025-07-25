@@ -12,6 +12,10 @@ manual-test-steps.md
 .env.production
 feedback-data.json
 
+# Documentation (personal use only)
+FEEDBACK_README.md
+*README*.md
+
 # OS generated files
 .DS_Store
 .DS_Store?

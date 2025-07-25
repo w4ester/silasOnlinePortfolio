@@ -1,6 +1,9 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
+    // Initialize EmailJS (for offline fallback)
+    emailjs.init("YOUR_EMAILJS_USER_ID"); // Replace with your EmailJS user ID
+    
     // Load existing feedback cards
-    loadFeedbackCards();
+    await loadFeedbackCards();
     
     // Handle form submission
     const form = document.getElementById('feedbackForm');
@@ -59,9 +62,24 @@ function saveFeedback(feedback) {
     localStorage.setItem('siteFeedbacks', JSON.stringify(feedbacks));
 }
 
-function loadFeedbackCards() {
-    const feedbacks = JSON.parse(localStorage.getItem('siteFeedbacks') || '[]');
-    feedbacks.forEach(feedback => addFeedbackCard(feedback));
+async function loadFeedbackCards() {
+    try {
+        // Try to fetch from server first (for cross-device visibility)
+        const response = await fetch('http://localhost:3001/api/feedback');
+        if (response.ok) {
+            const serverFeedbacks = await response.json();
+            console.log('📥 Loaded feedback from server:', serverFeedbacks.length, 'items');
+            serverFeedbacks.forEach(feedback => addFeedbackCard(feedback));
+            return;
+        }
+    } catch (error) {
+        console.log('📡 Server not available, loading from localStorage');
+    }
+    
+    // Fallback to localStorage if server is not available
+    const localFeedbacks = JSON.parse(localStorage.getItem('siteFeedbacks') || '[]');
+    console.log('💾 Loaded feedback from localStorage:', localFeedbacks.length, 'items');
+    localFeedbacks.forEach(feedback => addFeedbackCard(feedback));
 }
 
 function addFeedbackCard(feedback) {
@@ -169,7 +187,7 @@ async function submitToLocalServer(feedback) {
         console.log('✅ Local server response:', result);
 
         // Update status to show it was sent locally
-        updateFeedbackStatus(feedback.id, 'sent-to-developer');
+        await updateFeedbackStatus(feedback.id, 'sent-to-developer');
         
         // Show notification that it was sent to developer
         showLocalSubmissionNotification(feedback.id);
@@ -179,12 +197,73 @@ async function submitToLocalServer(feedback) {
         
         // Check if server is running
         if (error.message.includes('Failed to fetch') || error.message.includes('ERR_CONNECTION_REFUSED')) {
-            updateFeedbackStatus(feedback.id, 'server-offline');
-            showServerOfflineNotification();
+            await updateFeedbackStatus(feedback.id, 'server-offline');
+            
+            // Try email fallback
+            try {
+                await sendFeedbackEmail(feedback);
+                await updateFeedbackStatus(feedback.id, 'sent-via-email');
+                showEmailFallbackNotification();
+            } catch (emailError) {
+                console.error('Email fallback also failed:', emailError);
+                showServerOfflineNotification();
+            }
         } else {
-            updateFeedbackStatus(feedback.id, 'submission-error');
+            await updateFeedbackStatus(feedback.id, 'submission-error');
         }
     }
+}
+
+async function sendFeedbackEmail(feedback) {
+    const emailTemplate = {
+        service_id: 'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
+        template_id: 'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
+        user_id: 'YOUR_EMAILJS_USER_ID', // Replace with your EmailJS user ID
+        template_params: {
+            to_email: 'your@example.com', // Replace with your email
+            subject: `🎯 OFFLINE FEEDBACK: ${feedback.priority.toUpperCase()} - ${feedback.pageSection}`,
+            feedback_type: feedback.type,
+            priority: feedback.priority,
+            page_section: feedback.pageSection,
+            feedback_text: feedback.text,
+            expected_result: feedback.expectedResult || 'Not specified',
+            timestamp: feedback.timestamp,
+            feedback_id: feedback.id,
+            feedback_json: JSON.stringify(feedback, null, 2)
+        }
+    };
+
+    console.log('📧 Sending feedback via email fallback...');
+    await emailjs.send(
+        emailTemplate.service_id,
+        emailTemplate.template_id,
+        emailTemplate.template_params
+    );
+    console.log('✅ Email sent successfully');
+}
+
+function showEmailFallbackNotification() {
+    const notification = document.createElement('div');
+    notification.className = 'fixed bottom-4 right-4 bg-blue-500 text-white px-6 py-4 rounded-lg shadow-lg z-50 max-w-sm';
+    notification.innerHTML = `
+        <div class="flex items-start gap-3">
+            <span class="text-xl">📧</span>
+            <div>
+                <div class="font-bold mb-1">Sent via Email!</div>
+                <div class="text-sm opacity-90 mb-2">Server was offline, so we emailed your feedback to the developer.</div>
+                <div class="text-xs opacity-80">You'll get an email confirmation shortly.</div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Remove after 7 seconds
+    setTimeout(() => {
+        if (notification.parentElement) {
+            document.body.removeChild(notification);
+        }
+    }, 7000);
 }
 
 function getTypeEmoji(type) {
@@ -246,20 +325,32 @@ function showServerOfflineNotification() {
     }, 8000);
 }
 
-function updateFeedbackStatus(feedbackId, newStatus) {
+async function updateFeedbackStatus(feedbackId, newStatus) {
+    // Update localStorage first
     let feedbacks = JSON.parse(localStorage.getItem('siteFeedbacks') || '[]');
     const feedbackIndex = feedbacks.findIndex(f => f.id == feedbackId);
     if (feedbackIndex !== -1) {
         feedbacks[feedbackIndex].status = newStatus;
         localStorage.setItem('siteFeedbacks', JSON.stringify(feedbacks));
-        
-        // Reload the display
-        document.getElementById('feedbackCards').innerHTML = '';
-        loadFeedbackCards();
     }
+    
+    // Try to update server as well (for cross-device sync)
+    try {
+        await fetch(`http://localhost:3001/api/feedback/${feedbackId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: newStatus })
+        });
+    } catch (error) {
+        console.log('Could not sync status to server:', error.message);
+    }
+    
+    // Reload the display
+    document.getElementById('feedbackCards').innerHTML = '';
+    await loadFeedbackCards();
 }
 
-function editFeedback(feedbackId) {
+async function editFeedback(feedbackId) {
     let feedbacks = JSON.parse(localStorage.getItem('siteFeedbacks') || '[]');
     const feedback = feedbacks.find(f => f.id == feedbackId);
     if (feedback) {
@@ -271,21 +362,21 @@ function editFeedback(feedbackId) {
         document.getElementById('expectedResult').value = feedback.expectedResult || '';
         
         // Remove the old feedback
-        deleteFeedback(feedbackId);
+        await deleteFeedback(feedbackId);
         
         // Scroll to form
         document.getElementById('feedbackForm').scrollIntoView({ behavior: 'smooth' });
     }
 }
 
-function deleteFeedback(feedbackId) {
+async function deleteFeedback(feedbackId) {
     let feedbacks = JSON.parse(localStorage.getItem('siteFeedbacks') || '[]');
     feedbacks = feedbacks.filter(f => f.id != feedbackId);
     localStorage.setItem('siteFeedbacks', JSON.stringify(feedbacks));
     
     // Reload the display
     document.getElementById('feedbackCards').innerHTML = '';
-    loadFeedbackCards();
+    await loadFeedbackCards();
 }
 
 function showSuccessMessage() {
