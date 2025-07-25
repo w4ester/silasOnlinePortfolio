@@ -27,12 +27,22 @@
       white-space: normal !important;
       overflow: visible !important;
       text-overflow: clip !important;
+      font-size: 16px !important;
+      line-height: 1.5 !important;
+      padding: 12px !important;
+      display: block !important;
     }
     
     /* Ensure proper text rendering */
     input::placeholder {
       color: #9ca3af;
       opacity: 1;
+    }
+    
+    /* Force proper text display */
+    .bg-white input, .bg-white textarea {
+      color: #374151 !important;
+      font-family: inherit !important;
     }
   </style>
 </head>
