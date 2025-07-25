@@ -18,6 +18,23 @@
       }
     }
   </script>
+  <style>
+    /* Fix for input field display issues */
+    input[type="text"], input[type="email"], textarea {
+      min-width: 0 !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      white-space: normal !important;
+      overflow: visible !important;
+      text-overflow: clip !important;
+    }
+    
+    /* Ensure proper text rendering */
+    input::placeholder {
+      color: #9ca3af;
+      opacity: 1;
+    }
+  </style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-ocean-blue/10 min-h-screen">
   <!-- Navigation -->
@@ -184,6 +201,18 @@
       </div>
 
       <div class="bg-white rounded-lg shadow-xl p-8 text-gray-800">
+        <!-- Instructions Box -->
+        <div class="bg-blue-50 border-l-4 border-ocean-blue p-6 mb-8 rounded-r-lg">
+          <h3 class="text-lg font-bold text-deep-blue mb-3">📧 How This Works</h3>
+          <div class="space-y-2 text-sm text-gray-700">
+            <p><strong>1. Fill out your information</strong> in the form below</p>
+            <p><strong>2. Edit the sample letter</strong> with your personal experiences with Silas</p>
+            <p><strong>3. Click "Submit Recommendation"</strong> - this will prepare your email</p>
+            <p><strong>4. Copy the email content</strong> and paste it into your preferred email app</p>
+            <p class="text-ocean-blue font-medium">✅ Works with Gmail, Outlook, Apple Mail, phone apps, and any email service!</p>
+          </div>
+        </div>
+
         <div class="mb-6">
           <h3 class="text-2xl font-bold text-deep-blue mb-4">Sample Recommendation Letter</h3>
           <p class="text-sm text-gray-600 mb-4">Edit the text below to create your personalized recommendation:</p>
