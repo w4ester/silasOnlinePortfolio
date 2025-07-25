@@ -1,0 +1,25 @@
+# Development files
+.vscode/
+node_modules/
+package.json
+package-lock.json
+test-recommendation.js
+manual-test-steps.md
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temporary files
+*.tmp
+*.temp
+*~
