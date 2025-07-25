@@ -6,6 +6,12 @@ package-lock.json
 test-recommendation.js
 manual-test-steps.md
 
+# Environment variables and sensitive data
+.env
+.env.local
+.env.production
+feedback-data.json
+
 # OS generated files
 .DS_Store
 .DS_Store?
