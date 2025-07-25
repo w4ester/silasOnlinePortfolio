@@ -3,75 +3,264 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FSF Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Silas Forrester - Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ocean-blue': '#0ea5e9',
+            'deep-blue': '#0c4a6e',
+            'sand': '#fef3c7'
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body>
-  <header>
-    <h1>Silas Forrester</h1>
-    <p>Baltimore, MD</p>
-    <p>Email: 1william.forresterl@gmail.com
-  </header>
+<body class="bg-gradient-to-br from-blue-50 to-ocean-blue/10 min-h-screen">
+  <!-- Navigation -->
+  <nav class="bg-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex justify-between items-center py-4">
+        <div class="text-2xl font-bold text-deep-blue">Silas Forrester</div>
+        <div class="space-x-6">
+          <a href="#resume" class="text-gray-700 hover:text-ocean-blue transition-colors">Resume</a>
+          <a href="#recommendation" class="text-gray-700 hover:text-ocean-blue transition-colors">Write Recommendation</a>
+        </div>
+      </div>
+    </div>
+  </nav>
 
-  <section class="objective">
-    <h2>Objective</h2>
-    <p>
-      Motivated and responsible high school student entering 9th grade, eager to contribute to success at work and strong communication skills.
-      Experienced working with young people through Counselor In Training at Coppermine Kids Camp and recognized for academic achievement in honors programs.
-    </p>
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-ocean-blue to-deep-blue text-white py-20">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h1 class="text-5xl font-bold mb-4">Silas Forrester</h1>
+      <p class="text-xl mb-2">📍 Baltimore, MD</p>
+      <p class="text-lg mb-6">📧 1william.forrester@gmail.com</p>
+      <div class="flex justify-center space-x-4">
+        <span class="bg-white/20 px-4 py-2 rounded-full">🎣 Fishing Enthusiast</span>
+        <span class="bg-white/20 px-4 py-2 rounded-full">👥 Youth Mentor</span>
+        <span class="bg-white/20 px-4 py-2 rounded-full">🏆 Honor Student</span>
+      </div>
+    </div>
   </section>
 
-  <section class="education">
-    <h2>Education</h2>
-    <ul>
-      <li><strong>Boys Latin High School</strong> &mdash; 9th Grade, Baltimore, MD</li>
-      <li>Accepted into Legacy Scholars Program</li>
-      <li>Enrolled in Honors Program</li>
-    </ul>
+  <!-- Resume Section -->
+  <section id="resume" class="max-w-4xl mx-auto px-4 py-16">
+    <!-- Objective -->
+    <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+      <h2 class="text-3xl font-bold text-deep-blue mb-6 border-b-2 border-ocean-blue pb-2">Objective</h2>
+      <p class="text-gray-700 text-lg leading-relaxed">
+        Motivated and responsible high school student entering 9th grade, eager to contribute to success at work with strong communication skills.
+        Experienced working with young people through Counselor In Training at Coppermine Kids Camp and recognized for academic achievement in honors programs.
+      </p>
+    </div>
+
+    <!-- Education -->
+    <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+      <h2 class="text-3xl font-bold text-deep-blue mb-6 border-b-2 border-ocean-blue pb-2">Education</h2>
+      <div class="space-y-4">
+        <div class="border-l-4 border-ocean-blue pl-6">
+          <h3 class="text-xl font-semibold text-gray-800">Boys Latin High School</h3>
+          <p class="text-gray-600">9th Grade • Baltimore, MD</p>
+          <div class="mt-2 space-y-1">
+            <div class="flex items-center">
+              <span class="w-2 h-2 bg-ocean-blue rounded-full mr-3"></span>
+              <span>Accepted into Legacy Scholars Program</span>
+            </div>
+            <div class="flex items-center">
+              <span class="w-2 h-2 bg-ocean-blue rounded-full mr-3"></span>
+              <span>Enrolled in Honors Program</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Experience -->
+    <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+      <h2 class="text-3xl font-bold text-deep-blue mb-6 border-b-2 border-ocean-blue pb-2">Experience</h2>
+      <div class="border-l-4 border-ocean-blue pl-6">
+        <h3 class="text-xl font-semibold text-gray-800">Counselor In Training (CIT)</h3>
+        <p class="text-gray-600 mb-3">Coppermine Kids Camp • Summer 2025</p>
+        <div class="space-y-2">
+          <div class="flex items-start">
+            <span class="w-2 h-2 bg-ocean-blue rounded-full mr-3 mt-2"></span>
+            <span>Supported counselors with children ages 4–10</span>
+          </div>
+          <div class="flex items-start">
+            <span class="w-2 h-2 bg-ocean-blue rounded-full mr-3 mt-2"></span>
+            <span>Focused on care and engagement with 4-year-olds</span>
+          </div>
+          <div class="flex items-start">
+            <span class="w-2 h-2 bg-ocean-blue rounded-full mr-3 mt-2"></span>
+            <span>Practiced leadership, patience, and teamwork</span>
+          </div>
+          <div class="flex items-start">
+            <span class="w-2 h-2 bg-ocean-blue rounded-full mr-3 mt-2"></span>
+            <span>Maintained a safe and fun environment</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills & Interests Grid -->
+    <div class="grid md:grid-cols-2 gap-8 mb-8">
+      <!-- Skills -->
+      <div class="bg-white rounded-lg shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-deep-blue mb-6 border-b-2 border-ocean-blue pb-2">Skills</h2>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-ocean-blue/10 rounded-lg p-3 text-center">
+            <span class="font-medium">Leadership</span>
+          </div>
+          <div class="bg-ocean-blue/10 rounded-lg p-3 text-center">
+            <span class="font-medium">Communication</span>
+          </div>
+          <div class="bg-ocean-blue/10 rounded-lg p-3 text-center">
+            <span class="font-medium">Teamwork</span>
+          </div>
+          <div class="bg-ocean-blue/10 rounded-lg p-3 text-center">
+            <span class="font-medium">Childcare</span>
+          </div>
+          <div class="bg-ocean-blue/10 rounded-lg p-3 text-center">
+            <span class="font-medium">Time Management</span>
+          </div>
+          <div class="bg-ocean-blue/10 rounded-lg p-3 text-center">
+            <span class="font-medium">Positive Attitude</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interests -->
+      <div class="bg-white rounded-lg shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-deep-blue mb-6 border-b-2 border-ocean-blue pb-2">Hobbies & Interests</h2>
+        <div class="space-y-4">
+          <div class="flex items-center p-3 bg-sand rounded-lg">
+            <span class="text-2xl mr-4">🎣</span>
+            <span class="font-medium">Fishing</span>
+          </div>
+          <div class="flex items-center p-3 bg-sand rounded-lg">
+            <span class="text-2xl mr-4">✍️</span>
+            <span class="font-medium">Creative Writing</span>
+          </div>
+          <div class="flex items-center p-3 bg-sand rounded-lg">
+            <span class="text-2xl mr-4">🌲</span>
+            <span class="font-medium">Outdoor Exploration</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Awards -->
+    <div class="bg-white rounded-lg shadow-lg p-8">
+      <h2 class="text-3xl font-bold text-deep-blue mb-6 border-b-2 border-ocean-blue pb-2">Honors & Awards</h2>
+      <div class="space-y-4">
+        <div class="flex items-center p-4 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-lg border-l-4 border-yellow-500">
+          <span class="text-2xl mr-4">🏆</span>
+          <div>
+            <h3 class="font-semibold">Legacy Scholars Program</h3>
+            <p class="text-gray-600">Boys Latin High School</p>
+          </div>
+        </div>
+        <div class="flex items-center p-4 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-lg border-l-4 border-yellow-500">
+          <span class="text-2xl mr-4">📚</span>
+          <div>
+            <h3 class="font-semibold">Academic Honors Program</h3>
+            <p class="text-gray-600">Advanced Academic Track</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section class="experience">
-    <h2>Experience</h2>
-    <ul>
-      <li><strong>Counselor In Training (CIT)</strong> – Coppermine Kids Camp, Summer 2025</li>
-      <li>Supported counselors with children ages 4–10</li>
-      <li>Focused on care and engagement with 4-year-olds</li>
-      <li>Practiced leadership, patience, and teamwork</li>
-      <li>Maintained a safe and fun environment</li>
-    </ul>
+  <!-- Recommendation Section -->
+  <section id="recommendation" class="bg-gradient-to-r from-deep-blue to-ocean-blue text-white py-16">
+    <div class="max-w-4xl mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold mb-4">Write a Recommendation</h2>
+        <p class="text-xl">Help Silas by writing a recommendation letter. Use the sample below as a guide!</p>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-xl p-8 text-gray-800">
+        <div class="mb-6">
+          <h3 class="text-2xl font-bold text-deep-blue mb-4">Sample Recommendation Letter</h3>
+          <p class="text-sm text-gray-600 mb-4">Edit the text below to create your personalized recommendation:</p>
+        </div>
+
+        <form id="recommendationForm" class="space-y-6">
+          <div class="grid md:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
+              <input type="text" id="writerName" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-blue focus:border-transparent" placeholder="[Your Name]">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Your Title</label>
+              <input type="text" id="writerTitle" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-blue focus:border-transparent" placeholder="[Your Title]">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Your Email</label>
+              <input type="email" id="writerEmail" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-blue focus:border-transparent" placeholder="your.email@example.com">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Organization</label>
+            <input type="text" id="organization" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-blue focus:border-transparent" placeholder="[Your Organization]">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Recommendation Letter</label>
+            <textarea id="letterContent" rows="20" class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-blue focus:border-transparent text-sm leading-relaxed" placeholder="Edit this sample letter...">[Your Name]
+[Your Title]
+[Organization]
+[Date]
+
+
+Ellen MacGeorge
+(410) 391-0196
+Administration@bcsailing.org
+PO Box 34134
+2200 Rocky Point Road 
+Baltimore, MD 21221
+
+Dear Ellen MacGeorge,
+
+I'm writing to recommend Silas Forrester for the Teen Counselor In Training (CIT) position at BCSC fishing camp. I met Silas during the 2025 summer season where he was a Counselor in Training at Coppermine Youth Camp, he was with us for 4 weeks Mon-Fri (8:45am-5pm). During his time with us, we have been impressed by his dedication, caring, and ability to connect with the campers. His time was spent with campers ranging in age from 4-10 years old. In those 4 weeks as a counselor in training, we saw Silas connect with the campers and be there for them and focused on their well-being. And one great thing we learned personally about Silas, we learned Silas loves fishing.
+
+Silas possesses a blend of qualities that make him a great candidate for the role as a CIT with Baltimore Baltimore County Sailing Center. He is knowledgeable about adolescent development and mental health and possesses genuine empathy allowing him to build trust and rapport with campers. 
+
+Silas is highly motivated to work with BCSC and he has himself been a camper in the fishing camp for years, he tells us every summer for the last 5 years. Silas has taken this initiative to seek recommendation to apply for CIT at the Baltimore Baltimore County Sailing Center because he wants to be sure he shows his interest in applying for the summer of 2026. In seeking this opportunity Silas hopes to learn, grow and share with the campers a love of fishing in Maryland. We believe this motivation and his experience will be a great equalizer for the campers to truly enjoy fishing camp with Silas as a Counselor In Training. And I think we will have a lot of lifelong fishers after attending camp with Silas in Maryland. 
+
+In closing, Silas is a responsible, reliable, and respectful young person who would be an asset to your team. I'm confident that he possesses the skills, experience, and qualities necessary to excel as a Counselor In Training at BCSC fishing camp; and recommend Silas without reservation.
+
+Sincerely,
+[Your Name]
+[Your Title]
+1400 Coppermine Terrace, 
+Baltimore, MD 21209</textarea>
+          </div>
+
+          <div class="text-center">
+            <button type="submit" class="bg-ocean-blue hover:bg-deep-blue text-white font-bold py-4 px-8 rounded-lg transition-colors text-lg shadow-lg">
+              📧 Submit Recommendation
+            </button>
+            <p class="text-sm text-gray-600 mt-3">
+              Both you and Silas will receive email copies of this recommendation.
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
   </section>
 
-  <section class="skills">
-    <h2>Skills</h2>
-    <ul>
-      <li>Leadership</li>
-      <li>Communication</li>
-      <li>Teamwork</li>
-      <li>Childcare & Youth Engagement</li>
-      <li>Time Management</li>
-      <li>Positive Attitude</li>
-    </ul>
-  </section>
-
-  <section class="interests">
-    <h2>Hobbies & Interests</h2>
-    <ul>
-      <li>Fishing</li>
-      <li>Creative Writing</li>
-      <li>Outdoor Exploration</li>
-    </ul>
-  </section>
-
-  <section class="awards">
-    <h2>Honors & Awards</h2>
-    <ul>
-      <li>Legacy Scholars Program, Boys Latin High School</li>
-      <li>Admitted to Academic Honors Program</li>
-    </ul>
-  </section>
-
-  <footer>
-    <p><strong>Thank you:</strong> please email recommendations to 1william.forrester@gmail.com.</p>
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-8">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <p class="text-lg mb-2"><strong>Thank you for visiting!</strong></p>
+      <p>For questions or direct recommendations, email: <a href="mailto:1william.forrester@gmail.com" class="text-ocean-blue hover:underline">1william.forrester@gmail.com</a></p>
+    </div>
   </footer>
 
   <script src="script.js"></script>
